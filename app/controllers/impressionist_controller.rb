@@ -147,13 +147,14 @@ module ImpressionistController
       # str = request.session_options[:id]
       # logger.debug "Encoding: #{str.encoding.inspect}"
       # # request.session_options[:id].encode("ISO-8859-1")
-      if Rails::VERSION::MAJOR >= 4
+      if Rails::VERSION::MAJOR < 4
         session["init"] = true
         id = session.id.to_s
       else
         id = request.session_options[:id]
       end
 
+      binding.pry
       unless id.is_a? String
         id = id.cookie_value if Rack::Session::SessionId.const_defined?(:ID_VERSION) && Rack::Session::SessionId::ID_VERSION == 2
       end
